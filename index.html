@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Max's Tin Can | Chapel Hill, NC</title>
+<!-- Google Fonts: DM Serif Display for warm display titles,
+     DM Sans for nav/labels/body (clean, modern, friendly) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ========================================================
+     NAV — Logo upper-left, links right
+     To add/remove nav items, edit the <a> tags in .nav-links
+     ======================================================== -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <img class="nav-brand-logo" src="logo.png" alt="Max's Tin Can logo">
+      <div class="nav-brand-text">
+        <span class="nav-brand-name">Max's Tin Can</span>
+        <span class="nav-brand-sub">Chapel Hill, NC</span>
+      </div>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">Our Story</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#featured">The Holy Grail</a>
+      <a href="#events">Calendar</a>
+      <a href="#visit">Visit</a>
+      <a href="#contact">Contact Us</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========================================================
+     HERO — main title + "For the Love of Max" + logo only
+     ======================================================== -->
+<section id="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">21+ bar beneath Time-Out · Franklin Street, Chapel Hill</p>
+      <h1 class="hero-title">Max's<br>Tin Can</h1>
+      <!-- "For the Love of Max" replaces the old subtitle per request -->
+      <p class="hero-love">For the Love of Max</p>
+      <p class="hero-tagline">
+        A neighborhood bar with UNC spirit, late-night character, and a space that feels equal parts local hangout and game-day destination.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="#visit">Plan Your Visit</a>
+        <a class="btn btn-ghost" href="#contact">Contact Us</a>
+      </div>
+      <div class="hero-meta">
+        <span>Tue–Sat <strong>8 PM–2 AM</strong></span>
+        <span>Trivia Tuesday <strong>Every Week</strong></span>
+        <span>201 E. Franklin St. <strong>Chapel Hill</strong></span>
+      </div>
+    </div>
+    <!-- Right side: just the logo, no box around it -->
+    <div class="hero-visual">
+      <img class="hero-logo-solo" src="logo.png" alt="Max's Tin Can illustrated logo">
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     OUR STORY — left: stats panel + Contact Us button
+                  right: PLACEHOLDER image of Max & Rosie
+     To add real photo: replace the .about-img-placeholder div
+     with <img src="your-photo.jpg" alt="Max and Rosie">
+     ======================================================== -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-panel">
+        <p class="section-label">Our Story</p>
+        <h2 class="section-title">Franklin Street spirit,<br>served underground</h2>
+        <p class="section-body">
+          Max's Tin Can sits beneath Time-Out and leans into what people already love about Chapel Hill nights: strong local identity, game-day energy, and a bar that feels easy to return to.
+        </p>
+        <div class="about-stats">
+          <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Bar experience</div></div>
+          <div class="stat"><div class="stat-num">201</div><div class="stat-label">E. Franklin St.</div></div>
+          <div class="stat"><div class="stat-num">Tue</div><div class="stat-label">Trivia night</div></div>
+          <div class="stat"><div class="stat-num">Max</div><div class="stat-label">At the heart of it</div></div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER: Two stacked image placeholders matching height of left panel -->
+      <div style="display:flex;flex-direction:column;gap:1rem;align-self:stretch">
+        <div class="about-image-wrap" style="flex:1">
+          <div class="about-img-placeholder">
+            <span>🐕</span>
+            <p style="color:var(--muted);font-size:.85rem;text-align:center;line-height:1.5">
+              <strong style="color:var(--accent-light);display:block;margin-bottom:.3rem">Photo 1</strong>
+              Replace with &lt;img src="photo1.jpg"&gt;
+            </p>
+          </div>
+        </div>
+        <div class="about-image-wrap" style="flex:1">
+          <div class="about-img-placeholder">
+            <span>🍺</span>
+            <p style="color:var(--muted);font-size:.85rem;text-align:center;line-height:1.5">
+              <strong style="color:var(--accent-light);display:block;margin-bottom:.3rem">Photo 2</strong>
+              Replace with &lt;img src="photo2.jpg"&gt;
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     GALLERY — Instagram Posts from @tincanchapelhill
+     Uses Instagram's native oEmbed (no external service).
+     To add a post: go to the post on Instagram > click ⋯ >
+     Embed > copy the URL and add it below.
+     ======================================================== -->
+<section id="gallery">
+  <div class="container">
+    <div class="gallery-top">
+      <div>
+        <p class="section-label">Instagram</p>
+        <h2 class="section-title">Memories at Max's</h2>
+      </div>
+      <a class="btn" href="https://www.instagram.com/tincanchapelhill/" target="_blank" rel="noopener noreferrer">Follow @tincanchapelhill</a>
+    </div>
+    <div class="instagram-grid">
+      <!-- Instagram native embeds
+           HOW TO ADD POSTS:
+           1. Go to a post on instagram.com/tincanchapelhill
+           2. Click ⋯ (three dots) > Embed
+           3. Click "Copy embed code"
+           4. Paste the <blockquote> inside an <div class="ig-post-wrap"> below
+           5. Remove the <script> tag from the pasted code (we load it once at the bottom)
+
+           Example:
+           <div class="ig-post-wrap">
+             <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/POST_ID/" data-instgrm-version="14">
+               <a href="https://www.instagram.com/p/POST_ID/">View on Instagram</a>
+             </blockquote>
+           </div>
+      -->
+      <div class="ig-post-wrap ig-placeholder">
+        <a href="https://www.instagram.com/tincanchapelhill/" target="_blank" rel="noopener noreferrer">
+          <span>📸</span>
+          <p>Add Instagram post embed here</p>
+        </a>
+      </div>
+      <div class="ig-post-wrap ig-placeholder">
+        <a href="https://www.instagram.com/tincanchapelhill/" target="_blank" rel="noopener noreferrer">
+          <span>🍺</span>
+          <p>Add Instagram post embed here</p>
+        </a>
+      </div>
+      <div class="ig-post-wrap ig-placeholder">
+        <a href="https://www.instagram.com/tincanchapelhill/" target="_blank" rel="noopener noreferrer">
+          <span>🐶</span>
+          <p>Add Instagram post embed here</p>
+        </a>
+      </div>
+    </div>
+    <!-- Load Instagram embed script once — uncomment when you add real post embeds above -->
+    <!-- <script async src="https://www.instagram.com/embed.js"></script> -->
+  </div>
+</section>
+
+<!-- ========================================================
+     THE HOLY GRAIL — single featured drink + challenge info
+     Based on the Instagram post about the Holy Grail Challenge.
+     Update the drink description once you have exact copy.
+     ======================================================== -->
+<section id="featured">
+  <div class="container">
+    <p class="section-label">Signature Drink</p>
+    <h2 class="section-title">The Holy Grail</h2>
+    <p class="section-body">
+      Max's signature drink — refreshing, layered, and crafted for a great night out on Franklin Street.
+    </p>
+
+    <div class="holy-grail-grid">
+      <!-- Left: The drink itself -->
+      <div class="grail-card">
+        <!-- PLACEHOLDER: Add Holy Grail photo by placing an <img> tag above .grail-badge -->
+        <!-- <img src="holy-grail-drink.jpg" alt="The Holy Grail mocktail"
+              style="width:100%;height:220px;object-fit:cover;border-radius:12px;margin-bottom:1.5rem"> -->
+        <span class="grail-badge">Signature Drink</span>
+        <h3 class="grail-name">The Holy Grail</h3>
+        <p class="grail-desc">
+          Our signature drink — refreshing, layered, and built for a night out on Franklin Street. Bold, memorable, and worth trying on your first visit.
+        </p>
+        <!-- Holy Grail cup image — replace src with real photo -->
+        <div class="grail-image-wrap">
+          <div style="color:var(--muted);text-align:center">
+            <div style="font-size:3rem;margin-bottom:.5rem">🏆</div>
+            <p style="font-size:.85rem;line-height:1.5"><strong style="color:var(--accent-light);display:block;margin-bottom:.3rem">The Holy Grail</strong>Replace with: &lt;img src="holy-grail-cup.jpg"&gt;</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Holy Grail Challenge details (from Instagram post) -->
+      <div class="grail-challenge">
+        <h3 class="challenge-title">The Holy Grail Challenge</h3>
+        <p class="challenge-subtitle">#HolyGrailAtMaxs</p>
+        <div class="challenge-body">
+          <p>
+            Starting each Spring Semester, Max's runs the <strong>Holy Grail Challenge</strong> — a team competition built around the bar's signature drink.
+          </p>
+          <p>
+            The challenge brings the whole bar together and ends with a seriously good reward for the winning team.
+          </p>
+        </div>
+        <div class="challenge-rules">
+          <h4>How it works</h4>
+          <div class="rule-item"><span class="rule-dot">→</span><span>Each team has <strong>one captain</strong> who forms the team.</span></div>
+          <div class="rule-item"><span class="rule-dot">→</span><span>Each captain can add up to <strong>11 additional members</strong>.</span></div>
+          <div class="rule-item"><span class="rule-dot">→</span><span>Holy Grails are purchased by team members throughout the semester.</span></div>
+          <div class="rule-item"><span class="rule-dot">→</span><span>Once <strong>100 Holy Grails</strong> are purchased collectively, the winning team earns a <strong>2-hour weeknight private event</strong>!</span></div>
+        </div>
+        <p class="challenge-note">Must be 21+ to participate. Speak with a bartender downstairs to join.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     EVENTS / CALENDAR
+     Two modes:
+     1. Built-in mini calendar (default, shown when GOOGLE_CALENDAR_EMBED is empty)
+     2. Google Calendar embed (set GOOGLE_CALENDAR_EMBED in the script below)
+
+     To switch to Google Calendar:
+     - Make your calendar public in Google Calendar settings
+     - Copy the embed URL and paste it into GOOGLE_CALENDAR_EMBED below
+
+     To edit events in the built-in calendar:
+     - Edit the EVENTS array in the script section below
+     ======================================================== -->
+<section id="events">
+  <div class="container">
+    <p class="section-label">Events & Calendar</p>
+    <h2 class="section-title">What's happening at Max's</h2>
+    <p class="section-body">
+      Trivia Tuesday every week, UNC game watches, and more. Check the calendar for what's coming up.
+    </p>
+
+    <div class="calendar-shell">
+      <div class="calendar-frame">
+        <div class="calendar-toolbar">
+          <div>
+            <h3>Max's Tin Can Calendar</h3>
+            <!-- This note is for the developer, not visible to end users prominently -->
+            <p>Events update automatically once Google Calendar is connected.</p>
+          </div>
+          <a class="btn" href="#gallery">See the Gallery ↑</a>
+        </div>
+        <div class="calendar-stage" id="calendarStage">
+          <!-- Built-in calendar — rendered by JS below -->
+          <div class="builtin-calendar" id="builtinCal">
+            <div class="cal-nav">
+              <button id="calPrev">&#8249;</button>
+              <h4 id="calMonthTitle"></h4>
+              <button id="calNext">&#8250;</button>
+            </div>
+            <div class="cal-grid" id="calDowRow">
+              <div class="cal-dow">Sun</div>
+              <div class="cal-dow">Mon</div>
+              <div class="cal-dow">Tue</div>
+              <div class="cal-dow">Wed</div>
+              <div class="cal-dow">Thu</div>
+              <div class="cal-dow">Fri</div>
+              <div class="cal-dow">Sat</div>
+            </div>
+            <div class="cal-grid" id="calDays"></div>
+            <div class="cal-events-list" id="calEventsList"></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="calendar-side">
+        <h3>Recurring events</h3>
+        <div class="calendar-note">
+          <p><strong>Trivia Tuesday</strong> is the weekly anchor — every Tuesday, downstairs on Franklin.</p>
+        </div>
+        <div class="mini-event">
+          <span class="mini-kicker">Every Tuesday</span>
+          <h4>Trivia Tuesday</h4>
+          <p>Chapel Hill's favorite bar trivia. Teams welcome, walk-ins too.</p>
+        </div>
+        <div class="mini-event">
+          <span class="mini-kicker">Seasonal</span>
+          <h4>UNC Game Watches</h4>
+          <p>Basketball, football, rivalry nights — all on the big screens.</p>
+        </div>
+        <div class="mini-event">
+          <span class="mini-kicker">Ongoing</span>
+          <h4>Holy Grail Challenge</h4>
+          <p>Spring Semester team competition. Ask a bartender to join.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     VISIT — hours, address, map
+     ======================================================== -->
+<section id="visit">
+  <div class="container">
+    <div class="visit-grid">
+      <div class="visit-panel">
+        <p class="section-label">Visit Us</p>
+        <h2 class="section-title">Head downstairs on Franklin</h2>
+        <div class="visit-info">
+          <div class="info-row">
+            <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="info-text">
+              <strong>Address</strong>
+              201 E. Franklin St., Chapel Hill, NC 27514<br>
+              <span style="font-size:.82rem">Below Time-Out Restaurant</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="info-text">
+              <strong>Hours</strong>
+              Tue–Sat, 8 PM – 2 AM<br>
+              <span style="font-size:.82rem">Game-day hours may vary</span>
+            </div>
+          </div>
+        </div>
+        <table class="hours-table">
+          <tr><td>Tuesday</td><td>8 PM – 2 AM</td></tr>
+          <tr><td>Wednesday</td><td>8 PM – 2 AM</td></tr>
+          <tr><td>Thursday</td><td>8 PM – 2 AM</td></tr>
+          <tr><td>Friday</td><td>8 PM – 2 AM</td></tr>
+          <tr><td>Saturday</td><td>8 PM – 2 AM</td></tr>
+          <tr><td>Sunday – Monday</td><td>Closed</td></tr>
+        </table>
+      </div>
+      <div class="map-box">
+        <iframe
+          class="map-embed"
+          src="https://www.google.com/maps?q=201%20E.%20Franklin%20St.,%20Chapel%20Hill,%20NC%2027514&z=15&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Map of Max's Tin Can"
+        ></iframe>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     CONTACT US — new section linked from nav + Our Story
+     Form submissions currently log to console.
+     To wire up real submission: replace the handleFormSubmit
+     function in the script below with your backend fetch call
+     or a service like Formspree / Netlify Forms.
+     ======================================================== -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-title">Contact Us</h2>
+        <h3>We'd love to hear from you</h3>
+        <p>
+          Have a question about events, the Holy Grail Challenge, or private bookings? Drop us a message and we'll get back to you.
+        </p>
+        <p>
+          You can also reach us directly:<br>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:.4rem"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><a href="tel:9192404696">919.240.4696</a><br>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:.4rem"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://instagram.com/tincanchapelhill" target="_blank" rel="noopener">@tincanchapelhill</a><br>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:.4rem"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>201 E. Franklin St., Chapel Hill, NC
+        </p>
+        <p style="color:var(--muted);font-size:.9rem;margin-top:1rem">
+          We're open Tue–Sat, 8 PM – 2 AM. Stop by downstairs!
+        </p>
+      </div>
+
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <!-- CONTACT FORM — powered by Formspree
+             1. Go to https://formspree.io and create a free account
+             2. Create a new form and copy the form ID
+             3. Replace YOUR_FORM_ID above with your actual ID (e.g. "xwpkvgzr") -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cf-name">Your Name</label>
+            <input type="text" id="cf-name" name="name" placeholder="First &amp; last name" autocomplete="name" required>
+          </div>
+          <div class="form-group">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" placeholder="you@email.com" autocomplete="email" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cf-subject">Subject</label>
+          <select id="cf-subject" name="subject">
+            <option value="">Select a topic…</option>
+            <option>General question</option>
+            <option>Trivia Tuesday</option>
+            <option>Holy Grail Challenge</option>
+            <option>Private event / booking</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cf-msg">Message</label>
+          <textarea id="cf-msg" name="message" placeholder="Tell us what's on your mind…" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message</button>
+        <p id="form-feedback" style="margin-top:.8rem;font-size:.88rem;color:var(--accent);display:none;text-align:center"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     FOOTER
+     ======================================================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand-wrap">
+      <img src="logo.png" alt="Max's Tin Can logo" style="width:76px;height:76px;object-fit:contain">
+      <div class="footer-brand">
+        Max's Tin Can
+        <small>For the Love of Max · Chapel Hill, NC</small>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="#about">Story</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#featured">Holy Grail</a>
+      <a href="#events">Calendar</a>
+      <a href="#visit">Visit</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-social">
+      <a class="social-btn" href="https://www.instagram.com/tincanchapelhill/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Max's Tin Can · 201 E. Franklin St., Chapel Hill, NC · 21+ bar</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
