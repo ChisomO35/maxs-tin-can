@@ -14,13 +14,13 @@
 <body>
 
 <!-- ========================================================
-     NAV — Logo upper-left, links right
+     NAV - Logo upper-left, links right
      To add/remove nav items, edit the <a> tags in .nav-links
      ======================================================== -->
 <nav>
   <div class="nav-inner">
     <div class="nav-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-      <img class="nav-brand-logo" src="logo.png" alt="Max's Tin Can logo">
+      <img class="nav-brand-logo" src="logo.png" alt="Max's Tin Can logo" data-cimg="logo">
       <div class="nav-brand-text">
         <span class="nav-brand-name">Max's Tin Can</span>
         <span class="nav-brand-sub">Chapel Hill, NC</span>
@@ -39,17 +39,17 @@
 </nav>
 
 <!-- ========================================================
-     HERO — main title + "For the Love of Max" + logo only
+     HERO - main title + "For the Love of Max" + logo only
      ======================================================== -->
 <section id="hero">
   <div class="hero-noise"></div>
   <div class="hero-grid">
     <div class="hero-copy">
-      <p class="hero-eyebrow">21+ bar beneath Time-Out · Franklin Street, Chapel Hill</p>
-      <h1 class="hero-title">Max's<br>Tin Can</h1>
+      <p class="hero-eyebrow" data-c="hero.eyebrow" data-clabel="Hero · top line">21+ bar beneath Time-Out · Franklin Street, Chapel Hill</p>
+      <h1 class="hero-title" data-c="hero.title" data-clabel="Hero · main title (use a line break for two lines)">Max's<br>Tin Can</h1>
       <!-- "For the Love of Max" replaces the old subtitle per request -->
-      <p class="hero-love">For the Love of Max</p>
-      <p class="hero-tagline">
+      <p class="hero-love" data-c="hero.love" data-clabel="Hero · 'For the Love of Max' line">For the Love of Max</p>
+      <p class="hero-tagline" data-c="hero.tagline" data-clabel="Hero · tagline paragraph">
         A neighborhood bar with UNC spirit, late-night character, and a space that feels equal parts local hangout and game-day destination.
       </p>
       <div class="hero-actions">
@@ -57,20 +57,20 @@
         <a class="btn btn-ghost" href="#contact">Contact Us</a>
       </div>
       <div class="hero-meta">
-        <span>Tue–Sat <strong>8 PM–2 AM</strong></span>
-        <span>Trivia Tuesday <strong>Every Week</strong></span>
-        <span>201 E. Franklin St. <strong>Chapel Hill</strong></span>
+        <span data-c="hero.meta1" data-clabel="Hero · info chip 1">Tue–Sat <strong>8 PM–2 AM</strong></span>
+        <span data-c="hero.meta2" data-clabel="Hero · info chip 2">Trivia Tuesday <strong>Every Week</strong></span>
+        <span data-c="hero.meta3" data-clabel="Hero · info chip 3">201 E. Franklin St. <strong>Chapel Hill</strong></span>
       </div>
     </div>
     <!-- Right side: just the logo, no box around it -->
     <div class="hero-visual">
-      <img class="hero-logo-solo" src="logo.png" alt="Max's Tin Can illustrated logo">
+      <img class="hero-logo-solo" src="logo.png" alt="Max's Tin Can illustrated logo" data-cimg="logo">
     </div>
   </div>
 </section>
 
 <!-- ========================================================
-     OUR STORY — left: stats panel + Contact Us button
+     OUR STORY - left: stats panel + Contact Us button
                   right: PLACEHOLDER image of Max & Rosie
      To add real photo: replace the .about-img-placeholder div
      with <img src="your-photo.jpg" alt="Max and Rosie">
@@ -79,26 +79,26 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-panel">
-        <p class="section-label">Our Story</p>
-        <h2 class="section-title">Franklin Street spirit,<br>served underground</h2>
-        <p class="section-body">
+        <p class="section-label" data-c="about.label" data-clabel="Our Story · small label">Our Story</p>
+        <h2 class="section-title" data-c="about.title" data-clabel="Our Story · title">Franklin Street spirit,<br>served underground</h2>
+        <p class="section-body" data-c="about.body" data-clabel="Our Story · paragraph">
           Max's Tin Can sits beneath Time-Out and leans into what people already love about Chapel Hill nights: strong local identity, game-day energy, and a bar that feels easy to return to.
         </p>
         <div class="about-stats">
-          <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Bar experience</div></div>
-          <div class="stat"><div class="stat-num">201</div><div class="stat-label">E. Franklin St.</div></div>
-          <div class="stat"><div class="stat-num">Tue</div><div class="stat-label">Trivia night</div></div>
-          <div class="stat"><div class="stat-num">Max</div><div class="stat-label">At the heart of it</div></div>
+          <div class="stat"><div class="stat-num" data-c="about.stat1num" data-clabel="Stat 1 · number">21+</div><div class="stat-label" data-c="about.stat1label" data-clabel="Stat 1 · label">Bar experience</div></div>
+          <div class="stat"><div class="stat-num" data-c="about.stat2num" data-clabel="Stat 2 · number">201</div><div class="stat-label" data-c="about.stat2label" data-clabel="Stat 2 · label">E. Franklin St.</div></div>
+          <div class="stat"><div class="stat-num" data-c="about.stat3num" data-clabel="Stat 3 · number">Tue</div><div class="stat-label" data-c="about.stat3label" data-clabel="Stat 3 · label">Trivia night</div></div>
+          <div class="stat"><div class="stat-num" data-c="about.stat4num" data-clabel="Stat 4 · number">Max</div><div class="stat-label" data-c="about.stat4label" data-clabel="Stat 4 · label">At the heart of it</div></div>
         </div>
       </div>
 
       <!-- Two stacked photos matching height of left panel -->
       <div class="about-photos">
         <div class="about-image-wrap">
-          <img src="entrance.jpg" alt="The Max's Tin Can stairwell entrance on Franklin Street, lit blue at night">
+          <img src="entrance.jpg" alt="The Max's Tin Can stairwell entrance on Franklin Street, lit blue at night" data-cimg="about.entrance" data-clabel="Our Story · top photo">
         </div>
         <div class="about-image-wrap">
-          <img src="lounge.jpg" alt="Max's Tin Can lounge area with leather couches, exposed brick, and a game on the TV">
+          <img src="lounge.jpg" alt="Max's Tin Can lounge area with leather couches, exposed brick, and a game on the TV" data-cimg="about.lounge" data-clabel="Our Story · bottom photo">
         </div>
       </div>
     </div>
@@ -106,7 +106,7 @@
 </section>
 
 <!-- ========================================================
-     GALLERY — Instagram Posts from @tincanchapelhill
+     GALLERY - Instagram Posts from @tincanchapelhill
      Uses Instagram's native oEmbed (no external service).
      To add a post: go to the post on Instagram > click ⋯ >
      Embed > copy the URL and add it below.
@@ -115,8 +115,8 @@
   <div class="container">
     <div class="gallery-top">
       <div>
-        <p class="section-label">Instagram</p>
-        <h2 class="section-title">Memories at Max's</h2>
+        <p class="section-label" data-c="gallery.label" data-clabel="Gallery · small label">Instagram</p>
+        <h2 class="section-title" data-c="gallery.title" data-clabel="Gallery · title">Memories at Max's</h2>
       </div>
       <a class="btn" href="https://www.instagram.com/tincanchapelhill/" target="_blank" rel="noopener noreferrer">Follow @tincanchapelhill</a>
     </div>
@@ -137,34 +137,34 @@
            </div>
       -->
       <div class="ig-post-wrap gallery-photo">
-        <img src="crowd-tables.jpg" alt="Friends gathered around a table at Max's Tin Can under string lights">
+        <img src="crowd-tables.jpg" alt="Friends gathered around a table at Max's Tin Can under string lights" data-cimg="gallery.photo1" data-clabel="Gallery · photo 1">
       </div>
       <div class="ig-post-wrap gallery-photo">
-        <img src="busy-night.jpg" alt="A packed night at Max's Tin Can with the bar full of people">
+        <img src="busy-night.jpg" alt="A packed night at Max's Tin Can with the bar full of people" data-cimg="gallery.photo2" data-clabel="Gallery · photo 2">
       </div>
       <div class="ig-post-wrap gallery-photo">
-        <img src="theme-night.jpg" alt="A group in matching theme-night shirts at Max's Tin Can">
+        <img src="theme-night.jpg" alt="A group in matching theme-night shirts at Max's Tin Can" data-cimg="gallery.photo3" data-clabel="Gallery · photo 3">
       </div>
       <div class="ig-post-wrap gallery-photo">
-        <img src="interior.jpg" alt="The Max's Tin Can bar and stools glowing blue beneath string lights">
+        <img src="interior.jpg" alt="The Max's Tin Can bar and stools glowing blue beneath string lights" data-cimg="gallery.photo4" data-clabel="Gallery · photo 4">
       </div>
     </div>
-    <!-- Load Instagram embed script once — uncomment when you add real post embeds above -->
+    <!-- Load Instagram embed script once - uncomment when you add real post embeds above -->
     <!-- <script async src="https://www.instagram.com/embed.js"></script> -->
   </div>
 </section>
 
 <!-- ========================================================
-     THE HOLY GRAIL — single featured drink + challenge info
+     THE HOLY GRAIL - single featured drink + challenge info
      Based on the Instagram post about the Holy Grail Challenge.
      Update the drink description once you have exact copy.
      ======================================================== -->
 <section id="featured">
   <div class="container">
-    <p class="section-label">Signature Drink</p>
-    <h2 class="section-title">The Holy Grail</h2>
-    <p class="section-body">
-      Max's signature drink — refreshing, layered, and crafted for a great night out on Franklin Street.
+    <p class="section-label" data-c="featured.label" data-clabel="Holy Grail · small label">Signature Drink</p>
+    <h2 class="section-title" data-c="featured.title" data-clabel="Holy Grail · title">The Holy Grail</h2>
+    <p class="section-body" data-c="featured.body" data-clabel="Holy Grail · intro paragraph">
+      Max's signature drink: refreshing, layered, and crafted for a great night out on Franklin Street.
     </p>
 
     <div class="holy-grail-grid">
@@ -173,37 +173,37 @@
         <!-- PLACEHOLDER: Add Holy Grail photo by placing an <img> tag above .grail-badge -->
         <!-- <img src="holy-grail-drink.jpg" alt="The Holy Grail mocktail"
               style="width:100%;height:220px;object-fit:cover;border-radius:12px;margin-bottom:1.5rem"> -->
-        <span class="grail-badge">Signature Drink</span>
-        <h3 class="grail-name">The Holy Grail</h3>
-        <p class="grail-desc">
-          Our signature drink — refreshing, layered, and built for a night out on Franklin Street. Bold, memorable, and worth trying on your first visit.
+        <span class="grail-badge" data-c="featured.badge" data-clabel="Holy Grail card · badge">Signature Drink</span>
+        <h3 class="grail-name" data-c="featured.grailName" data-clabel="Holy Grail card · drink name">The Holy Grail</h3>
+        <p class="grail-desc" data-c="featured.grailDesc" data-clabel="Holy Grail card · description">
+          Our signature drink: refreshing, layered, and built for a night out on Franklin Street. Bold, memorable, and worth trying on your first visit.
         </p>
         <!-- Holy Grail cup image -->
         <div class="grail-image-wrap">
-          <img src="holy-grail.webp" alt="The Holy Grail — a gold trophy cup held in hand">
+          <img src="holy-grail.webp" alt="The Holy Grail: a gold trophy cup held in hand" data-cimg="featured.image" data-clabel="Holy Grail · drink photo">
         </div>
       </div>
 
       <!-- Right: Holy Grail Challenge details (from Instagram post) -->
       <div class="grail-challenge">
-        <h3 class="challenge-title">The Holy Grail Challenge</h3>
-        <p class="challenge-subtitle">#HolyGrailAtMaxs</p>
+        <h3 class="challenge-title" data-c="featured.challengeTitle" data-clabel="Challenge · title">The Holy Grail Challenge</h3>
+        <p class="challenge-subtitle" data-c="featured.challengeSubtitle" data-clabel="Challenge · hashtag">#HolyGrailAtMaxs</p>
         <div class="challenge-body">
-          <p>
-            Starting each Spring Semester, Max's runs the <strong>Holy Grail Challenge</strong> — a team competition built around the bar's signature drink.
+          <p data-c="featured.challengeBody1" data-clabel="Challenge · paragraph 1">
+            Starting each Spring Semester, Max's runs the <strong>Holy Grail Challenge</strong>, a team competition built around the bar's signature drink.
           </p>
-          <p>
+          <p data-c="featured.challengeBody2" data-clabel="Challenge · paragraph 2">
             The challenge brings the whole bar together and ends with a seriously good reward for the winning team.
           </p>
         </div>
         <div class="challenge-rules">
-          <h4>How it works</h4>
-          <div class="rule-item"><span class="rule-dot">→</span><span>Each team has <strong>one captain</strong> who forms the team.</span></div>
-          <div class="rule-item"><span class="rule-dot">→</span><span>Each captain can add up to <strong>11 additional members</strong>.</span></div>
-          <div class="rule-item"><span class="rule-dot">→</span><span>Holy Grails are purchased by team members throughout the semester.</span></div>
-          <div class="rule-item"><span class="rule-dot">→</span><span>Once <strong>100 Holy Grails</strong> are purchased collectively, the winning team earns a <strong>2-hour weeknight private event</strong>!</span></div>
+          <h4 data-c="featured.rulesHeading" data-clabel="Challenge · 'How it works' heading">How it works</h4>
+          <div class="rule-item"><span class="rule-dot">→</span><span data-c="featured.rule1" data-clabel="Challenge · rule 1">Each team has <strong>one captain</strong> who forms the team.</span></div>
+          <div class="rule-item"><span class="rule-dot">→</span><span data-c="featured.rule2" data-clabel="Challenge · rule 2">Each captain can add up to <strong>11 additional members</strong>.</span></div>
+          <div class="rule-item"><span class="rule-dot">→</span><span data-c="featured.rule3" data-clabel="Challenge · rule 3">Holy Grails are purchased by team members throughout the semester.</span></div>
+          <div class="rule-item"><span class="rule-dot">→</span><span data-c="featured.rule4" data-clabel="Challenge · rule 4">Once <strong>100 Holy Grails</strong> are purchased collectively, the winning team earns a <strong>2-hour weeknight private event</strong>!</span></div>
         </div>
-        <p class="challenge-note">Must be 21+ to participate. Speak with a bartender downstairs to join.</p>
+        <p class="challenge-note" data-c="featured.note" data-clabel="Challenge · footnote">Must be 21+ to participate. Speak with a bartender downstairs to join.</p>
       </div>
     </div>
   </div>
@@ -224,9 +224,9 @@
      ======================================================== -->
 <section id="events">
   <div class="container">
-    <p class="section-label">Events & Calendar</p>
-    <h2 class="section-title">What's happening at Max's</h2>
-    <p class="section-body">
+    <p class="section-label" data-c="events.label" data-clabel="Calendar · small label">Events & Calendar</p>
+    <h2 class="section-title" data-c="events.title" data-clabel="Calendar · title">What's happening at Max's</h2>
+    <p class="section-body" data-c="events.body" data-clabel="Calendar · intro paragraph">
       Trivia Tuesday every week, UNC game watches, and more. Check the calendar for what's coming up.
     </p>
 
@@ -241,7 +241,7 @@
           <a class="btn" href="#gallery">See the Gallery ↑</a>
         </div>
         <div class="calendar-stage" id="calendarStage">
-          <!-- Built-in calendar — rendered by JS below -->
+          <!-- Built-in calendar - rendered by JS below -->
           <div class="builtin-calendar" id="builtinCal">
             <div class="cal-nav">
               <button id="calPrev">&#8249;</button>
@@ -264,24 +264,24 @@
       </div>
 
       <aside class="calendar-side">
-        <h3>Recurring events</h3>
+        <h3 data-c="events.sideHeading" data-clabel="Calendar sidebar · heading">Recurring events</h3>
         <div class="calendar-note">
-          <p><strong>Trivia Tuesday</strong> is the weekly anchor — every Tuesday, downstairs on Franklin.</p>
+          <p data-c="events.sideNote" data-clabel="Calendar sidebar · note"><strong>Trivia Tuesday</strong> is the weekly anchor, every Tuesday, downstairs on Franklin.</p>
         </div>
         <div class="mini-event">
-          <span class="mini-kicker">Every Tuesday</span>
-          <h4>Trivia Tuesday</h4>
-          <p>Chapel Hill's favorite bar trivia. Teams welcome, walk-ins too.</p>
+          <span class="mini-kicker" data-c="events.mini1kicker" data-clabel="Recurring 1 · tag">Every Tuesday</span>
+          <h4 data-c="events.mini1title" data-clabel="Recurring 1 · title">Trivia Tuesday</h4>
+          <p data-c="events.mini1desc" data-clabel="Recurring 1 · description">Chapel Hill's favorite bar trivia. Teams welcome, walk-ins too.</p>
         </div>
         <div class="mini-event">
-          <span class="mini-kicker">Seasonal</span>
-          <h4>UNC Game Watches</h4>
-          <p>Basketball, football, rivalry nights — all on the big screens.</p>
+          <span class="mini-kicker" data-c="events.mini2kicker" data-clabel="Recurring 2 · tag">Seasonal</span>
+          <h4 data-c="events.mini2title" data-clabel="Recurring 2 · title">UNC Game Watches</h4>
+          <p data-c="events.mini2desc" data-clabel="Recurring 2 · description">Basketball, football, rivalry nights, all on the big screens.</p>
         </div>
         <div class="mini-event">
-          <span class="mini-kicker">Ongoing</span>
-          <h4>Holy Grail Challenge</h4>
-          <p>Spring Semester team competition. Ask a bartender to join.</p>
+          <span class="mini-kicker" data-c="events.mini3kicker" data-clabel="Recurring 3 · tag">Ongoing</span>
+          <h4 data-c="events.mini3title" data-clabel="Recurring 3 · title">Holy Grail Challenge</h4>
+          <p data-c="events.mini3desc" data-clabel="Recurring 3 · description">Spring Semester team competition. Ask a bartender to join.</p>
         </div>
       </aside>
     </div>
@@ -289,18 +289,18 @@
 </section>
 
 <!-- ========================================================
-     VISIT — hours, address, map
+     VISIT - hours, address, map
      ======================================================== -->
 <section id="visit">
   <div class="container">
     <div class="visit-grid">
       <div class="visit-panel">
-        <p class="section-label">Visit Us</p>
-        <h2 class="section-title">Head downstairs on Franklin</h2>
+        <p class="section-label" data-c="visit.label" data-clabel="Visit · small label">Visit Us</p>
+        <h2 class="section-title" data-c="visit.title" data-clabel="Visit · title">Head downstairs on Franklin</h2>
         <div class="visit-info">
           <div class="info-row">
             <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-            <div class="info-text">
+            <div class="info-text" data-c="visit.address" data-clabel="Visit · address block">
               <strong>Address</strong>
               201 E. Franklin St., Chapel Hill, NC 27514<br>
               <span style="font-size:.82rem">Below Time-Out Restaurant</span>
@@ -308,7 +308,7 @@
           </div>
           <div class="info-row">
             <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-            <div class="info-text">
+            <div class="info-text" data-c="visit.hoursSummary" data-clabel="Visit · hours summary">
               <strong>Hours</strong>
               Tue–Sat, 8 PM – 2 AM<br>
               <span style="font-size:.82rem">Game-day hours may vary</span>
@@ -339,7 +339,7 @@
 </section>
 
 <!-- ========================================================
-     CONTACT US — new section linked from nav + Our Story
+     CONTACT US - new section linked from nav + Our Story
      Form submissions currently log to console.
      To wire up real submission: replace the handleFormSubmit
      function in the script below with your backend fetch call
@@ -349,10 +349,10 @@
   <div class="container">
     <div class="contact-grid">
       <div class="contact-info">
-        <p class="section-label">Get in Touch</p>
-        <h2 class="section-title">Contact Us</h2>
-        <h3>We'd love to hear from you</h3>
-        <p>
+        <p class="section-label" data-c="contact.label" data-clabel="Contact · small label">Get in Touch</p>
+        <h2 class="section-title" data-c="contact.title" data-clabel="Contact · title">Contact Us</h2>
+        <h3 data-c="contact.heading" data-clabel="Contact · subheading">We'd love to hear from you</h3>
+        <p data-c="contact.body" data-clabel="Contact · paragraph">
           Have a question about events, the Holy Grail Challenge, or private bookings? Drop us a message and we'll get back to you.
         </p>
         <p>
@@ -367,7 +367,7 @@
       </div>
 
       <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <!-- CONTACT FORM — powered by Formspree
+        <!-- CONTACT FORM - powered by Formspree
              1. Go to https://formspree.io and create a free account
              2. Create a new form and copy the form ID
              3. Replace YOUR_FORM_ID above with your actual ID (e.g. "xwpkvgzr") -->
@@ -409,7 +409,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-brand-wrap">
-      <img src="logo.png" alt="Max's Tin Can logo" style="width:76px;height:76px;object-fit:contain">
+      <img src="logo.png" alt="Max's Tin Can logo" style="width:76px;height:76px;object-fit:contain" data-cimg="logo">
       <div class="footer-brand">
         Max's Tin Can
         <small>For the Love of Max · Chapel Hill, NC</small>
@@ -427,7 +427,8 @@
       <a class="social-btn" href="https://www.instagram.com/tincanchapelhill/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
     </div>
   </div>
-  <p class="footer-copy">© 2026 Max's Tin Can · 201 E. Franklin St., Chapel Hill, NC · 21+ bar</p>
+  <p class="footer-copy" data-c="footer.copy" data-clabel="Footer · copyright line">© 2026 Max's Tin Can · 201 E. Franklin St., Chapel Hill, NC · 21+ bar</p>
+  <p class="footer-admin"><a href="/admin">Admin</a></p>
 </footer>
 
 <script src="script.js"></script>

@@ -7,11 +7,12 @@
 const GOOGLE_CALENDAR_EMBED = "";
 
 // ─────────────────────────────────────────────────────────
-// EVENTS for built-in calendar
+// EVENTS for built-in calendar (FALLBACK ONLY)
+// Live events are loaded from /api/content (managed in /admin).
+// These are only used if the API can't be reached.
 // Format: { date: "YYYY-MM-DD", title: "Event Name", desc: "Details" }
-// Edit or add events here. Trivia Tuesdays are pre-loaded.
 // ─────────────────────────────────────────────────────────
-const EVENTS = [
+let EVENTS = [
   // Trivia Tuesdays
   { date:"2026-04-14", title:"Trivia Tuesday", desc:"Weekly bar trivia. Teams of up to 6. Come early for a good spot!" },
   { date:"2026-04-21", title:"Trivia Tuesday", desc:"Weekly bar trivia. Teams of up to 6. Come early for a good spot!" },
@@ -20,7 +21,7 @@ const EVENTS = [
   { date:"2026-05-12", title:"Trivia Tuesday", desc:"Weekly bar trivia. Teams of up to 6. Come early for a good spot!" },
   // One-off events
   { date:"2026-04-18", title:"UNC Game Watch", desc:"Tar Heels on the big screen. Come early for a good seat." },
-  { date:"2026-04-25", title:"Special Drink Night", desc:"Ask your bartender — tonight's special is worth it." },
+  { date:"2026-04-25", title:"Special Drink Night", desc:"Ask your bartender, tonight's special is worth it." },
 ];
 
 // ─────────────────────────────────────────────────────────
@@ -31,7 +32,7 @@ function openLink(url){
 }
 
 // ─────────────────────────────────────────────────────────
-// NAV — mobile toggle + active section highlighting
+// NAV - mobile toggle + active section highlighting
 // ─────────────────────────────────────────────────────────
 const navToggle = document.getElementById('navToggle');
 const navLinks  = document.getElementById('navLinks');
@@ -48,17 +49,50 @@ window.addEventListener('scroll', () => {
 });
 
 // ─────────────────────────────────────────────────────────
-// CALENDAR — Google embed OR built-in widget
+// LIVE CONTENT - load admin-managed text, images and events
+// from /api/content, then start the calendar. Everything the
+// owner edits in /admin appears here. If the API is offline we
+// just fall back to the content already in the HTML.
 // ─────────────────────────────────────────────────────────
-const calStage = document.getElementById('calendarStage');
-if (GOOGLE_CALENDAR_EMBED && GOOGLE_CALENDAR_EMBED.trim()) {
-  // Remove built-in widget and inject Google Calendar iframe
-  document.getElementById('builtinCal').remove();
-  calStage.innerHTML = '<iframe src="' + GOOGLE_CALENDAR_EMBED + '" loading="lazy" title="Max\'s Tin Can Calendar" style="width:100%;height:100%;min-height:490px;border:0;display:block"></iframe>';
-} else {
-  // Initialize the built-in interactive calendar
-  initBuiltinCalendar();
+function applyLiveContent(content) {
+  if (!content || typeof content !== 'object') return;
+  // Text overrides → elements tagged with data-c="key"
+  if (content.texts) {
+    document.querySelectorAll('[data-c]').forEach(el => {
+      const key = el.getAttribute('data-c');
+      if (Object.prototype.hasOwnProperty.call(content.texts, key)) {
+        el.innerHTML = content.texts[key];
+      }
+    });
+  }
+  // Image overrides → elements tagged with data-cimg="key"
+  if (content.images) {
+    document.querySelectorAll('[data-cimg]').forEach(el => {
+      const key = el.getAttribute('data-cimg');
+      if (content.images[key]) el.src = content.images[key];
+    });
+  }
+  // Events → replace the calendar source if provided
+  if (Array.isArray(content.events)) EVENTS = content.events;
 }
+
+function startCalendar() {
+  const calStage = document.getElementById('calendarStage');
+  if (GOOGLE_CALENDAR_EMBED && GOOGLE_CALENDAR_EMBED.trim()) {
+    // Remove built-in widget and inject Google Calendar iframe
+    document.getElementById('builtinCal').remove();
+    calStage.innerHTML = '<iframe src="' + GOOGLE_CALENDAR_EMBED + '" loading="lazy" title="Max\'s Tin Can Calendar" style="width:100%;height:100%;min-height:490px;border:0;display:block"></iframe>';
+  } else {
+    // Initialize the built-in interactive calendar
+    initBuiltinCalendar();
+  }
+}
+
+fetch('/api/content', { cache: 'no-store' })
+  .then(r => r.ok ? r.json() : null)
+  .then(content => { applyLiveContent(content); })
+  .catch(() => { /* offline / not deployed yet - use HTML defaults */ })
+  .finally(() => { startCalendar(); });
 
 function initBuiltinCalendar() {
   const MONTHS = ['January','February','March','April','May','June',
@@ -125,12 +159,12 @@ function initBuiltinCalendar() {
 }
 
 // ─────────────────────────────────────────────────────────
-// INSTAGRAM EMBEDS — re-process after page load
+// INSTAGRAM EMBEDS - re-process after page load
 // ─────────────────────────────────────────────────────────
 if (window.instgrm) window.instgrm.Embeds.process();
 
 // ─────────────────────────────────────────────────────────
-// CONTACT FORM — Formspree integration
+// CONTACT FORM - Formspree integration
 // Replace YOUR_FORM_ID in the form action with your Formspree ID
 // Sign up free at https://formspree.io
 // ─────────────────────────────────────────────────────────

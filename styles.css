@@ -1,5 +1,5 @@
 /* =========================================================
-   DESIGN TOKENS — Light Mode
+   DESIGN TOKENS - Light Mode
    Primary accent : #4B9CD3 (Carolina Blue)
    Supplementary  : #2F79B4 (darker blue), #E9F4FB (pale blue tint)
    ========================================================= */
@@ -214,7 +214,7 @@ section{padding:5.5rem 1.5rem}
 .about-img-placeholder p{font-size:.88rem;line-height:1.6}
 
 /* =========================================================
-   GALLERY — Instagram posts
+   GALLERY - Instagram posts
    ========================================================= */
 #gallery{background:var(--bg)}
 .gallery-top{
@@ -615,3 +615,20 @@ footer{
   .nav-brand-name{font-size:.88rem}
   .hero-title{font-size:clamp(2.8rem,16vw,4.5rem)}
 }
+
+/* =========================================================
+   FOOTER ADMIN LINK - small, unobtrusive link to /admin
+   ========================================================= */
+.footer-admin{
+  text-align:center;
+  margin-top:.4rem;
+  padding-bottom:.4rem;
+}
+.footer-admin a{
+  color:var(--muted);
+  opacity:.5;
+  font-size:.72rem;
+  letter-spacing:.04em;
+  transition:opacity .2s;
+}
+.footer-admin a:hover{opacity:1;color:var(--accent)}

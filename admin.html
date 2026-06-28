@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Site Manager · Max's Tin Can</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#99BADD; --accent-dark:#7A9FC8;
+  --bg:#F5F7FA; --card:#FFFFFF; --text:#1a1a1a; --heading:#111;
+  --muted:#5a6f7e; --border:rgba(0,0,0,.12); --good:#1f8a4c; --bad:#c0392b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+img{max-width:100%;display:block}
+button{font:inherit;cursor:pointer}
+input,textarea,select{font:inherit}
+a{color:var(--accent-dark)}
+
+/* ===== Login screen ===== */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:2.5rem 2rem;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.08)}
+.login-card img{width:84px;height:84px;object-fit:contain;margin:0 auto 1rem}
+.login-card h1{font-family:'DM Serif Display',serif;font-size:1.7rem;color:var(--heading);margin-bottom:.25rem;font-weight:400}
+.login-card p{color:var(--muted);font-size:.92rem;margin-bottom:1.5rem}
+.login-card input{width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:10px;margin-bottom:.9rem;text-align:center;font-size:1rem}
+.login-card input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(153,186,221,.3)}
+.btn{background:var(--accent);color:#10293c;border:none;border-radius:10px;padding:.85rem 1.4rem;font-weight:600;font-size:.95rem;transition:background .2s,transform .05s}
+.btn:hover{background:var(--accent-dark)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-full{width:100%}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-ghost:hover{background:var(--bg)}
+.btn-danger{background:transparent;border:1px solid rgba(192,57,43,.4);color:var(--bad);padding:.45rem .8rem;font-size:.82rem;border-radius:8px}
+.btn-danger:hover{background:rgba(192,57,43,.08)}
+.msg{font-size:.88rem;min-height:1.2em;margin-top:.2rem}
+.msg.bad{color:var(--bad)}
+.msg.good{color:var(--good)}
+
+/* ===== App shell ===== */
+.app{display:none;max-width:880px;margin:0 auto;padding:1.25rem 1rem 7rem}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.5rem 0 1.25rem;flex-wrap:wrap}
+.topbar-brand{display:flex;align-items:center;gap:.7rem}
+.topbar-brand img{width:46px;height:46px;object-fit:contain}
+.topbar-brand b{font-family:'DM Serif Display',serif;font-weight:400;font-size:1.25rem;color:var(--heading);display:block;line-height:1.1}
+.topbar-brand span{font-size:.78rem;color:var(--muted)}
+.tabs{display:flex;gap:.4rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.35rem;position:sticky;top:.5rem;z-index:5}
+.tab{flex:1;padding:.7rem .5rem;border:none;background:transparent;border-radius:8px;font-weight:600;font-size:.9rem;color:var(--muted)}
+.tab.active{background:var(--accent);color:#10293c}
+.panel{display:none;margin-top:1.25rem}
+.panel.active{display:block}
+.intro{color:var(--muted);font-size:.9rem;margin-bottom:1rem}
+
+.group{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.1rem .4rem;margin-bottom:1.1rem}
+.group > h3{font-size:.95rem;color:var(--heading);margin-bottom:.9rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:.35rem}
+.field textarea,.field input[type=text],.field input[type=date]{width:100%;padding:.6rem .7rem;border:1px solid var(--border);border-radius:9px;font-size:.95rem;resize:vertical}
+.field textarea:focus,.field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(153,186,221,.25)}
+.field textarea{min-height:2.6rem}
+.field .rt{width:100%;min-height:2.6rem;padding:.6rem .7rem;border:1px solid var(--border);border-radius:9px;font-size:.95rem;line-height:1.5;background:#fff;word-break:break-word}
+.field .rt:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(153,186,221,.25)}
+.field .rt strong{font-weight:700}
+
+/* Photos */
+.photo-card{display:flex;gap:1rem;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.photo-thumb{width:90px;height:90px;border-radius:10px;object-fit:cover;background:var(--bg);border:1px solid var(--border);flex-shrink:0}
+.photo-thumb.contain{object-fit:contain}
+.photo-meta{flex:1;min-width:160px}
+.photo-meta b{font-size:.9rem;color:var(--heading)}
+.photo-meta .status{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+.photo-actions label{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:.55rem .9rem;font-size:.86rem;font-weight:600}
+.photo-actions input[type=file]{display:none}
+
+/* Events */
+.event-row{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:.9rem}
+.event-row .er-top{display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end}
+.event-row .er-date{flex:0 0 170px}
+.event-row .er-title{flex:1;min-width:180px}
+.event-row .er-desc{margin-top:.7rem}
+.event-row .er-foot{display:flex;justify-content:flex-end;margin-top:.6rem}
+.add-event{width:100%;border:2px dashed var(--border);background:transparent;color:var(--muted);padding:.9rem;border-radius:12px;font-weight:600}
+.add-event:hover{border-color:var(--accent);color:var(--accent-dark)}
+.empty{color:var(--muted);font-size:.9rem;text-align:center;padding:1.5rem 0}
+
+/* Save bar */
+.savebar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--border);padding:.8rem 1rem;display:none;z-index:20}
+.savebar.show{display:block}
+.savebar-inner{max-width:880px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.savebar .msg{flex:1}
+.loading{text-align:center;padding:3rem 1rem;color:var(--muted)}
+
+/* ===== Mobile ===== */
+@media(max-width:600px){
+  .app{padding:1rem .7rem 6.5rem}
+  /* 16px prevents iOS Safari from auto-zooming when a field is focused */
+  .field .rt,.field textarea,.field input[type=text],.field input[type=date],
+  .event-row input,.event-row textarea,.login-card input{font-size:16px}
+  .topbar{gap:.6rem;padding-bottom:1rem}
+  .topbar-brand b{font-size:1.1rem}
+  .tabs{padding:.3rem;gap:.25rem}
+  .tab{font-size:.8rem;padding:.65rem .25rem}
+  .group{padding:.9rem .85rem .2rem}
+  .photo-card{gap:.7rem;padding:.85rem}
+  .photo-thumb{width:64px;height:64px}
+  .photo-actions{width:100%}
+  .event-row .er-date,.event-row .er-title{flex:1 1 100%}
+  .savebar{padding:.7rem .8rem}
+  .savebar-inner{gap:.6rem}
+  .savebar .btn{flex-shrink:0}
+  .savebar .msg{font-size:.82rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <form class="login-card" id="loginForm">
+    <img src="logo.png" alt="Max's Tin Can">
+    <h1>Site Manager</h1>
+    <p>Enter the password to edit the website.</p>
+    <input type="password" id="pw" placeholder="Password" autocomplete="current-password" required>
+    <button class="btn btn-full" type="submit" id="loginBtn">Enter</button>
+    <p class="msg bad" id="loginMsg"></p>
+  </form>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="topbar-brand">
+      <img src="logo.png" alt="">
+      <div>
+        <b>Max's Tin Can</b>
+        <span>Website Manager</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:.5rem">
+      <a class="btn btn-ghost" href="/" target="_blank" rel="noopener" style="text-decoration:none">View site ↗</a>
+      <button class="btn btn-ghost" id="logoutBtn">Log out</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="events">📅 Events</button>
+    <button class="tab" data-tab="text">✏️ Text</button>
+    <button class="tab" data-tab="photos">🖼️ Photos</button>
+  </div>
+
+  <!-- EVENTS -->
+  <section class="panel active" id="panel-events">
+    <p class="intro">Add, edit, or remove events shown on the website calendar. Pick a date, give it a title, and add a short description.</p>
+    <div id="eventList"></div>
+    <button class="add-event" id="addEventBtn">+ Add an event</button>
+  </section>
+
+  <!-- TEXT -->
+  <section class="panel" id="panel-text">
+    <p class="intro">Edit any wording on the site, then hit Save. To make a word <strong>bold</strong>, select it and press <strong>Ctrl/⌘ + B</strong>. Press Enter for a new line. Leave a box as-is to keep the current text.</p>
+    <div id="textFields"><div class="loading">Loading…</div></div>
+  </section>
+
+  <!-- PHOTOS -->
+  <section class="panel" id="panel-photos">
+    <p class="intro">Replace any photo on the site. Choose a new image and it uploads automatically — then hit Save to make it live.</p>
+    <div id="photoFields"><div class="loading">Loading…</div></div>
+  </section>
+</div>
+
+<!-- SAVE BAR -->
+<div class="savebar" id="savebar">
+  <div class="savebar-inner">
+    <span class="msg" id="saveMsg"></span>
+    <button class="btn" id="saveBtn">Save changes</button>
+  </div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
