@@ -339,6 +339,36 @@ section{padding:5.5rem 1.5rem}
 }
 
 /* =========================================================
+   MENU - Untappd embed
+   The iframe is injected by Untappd's preloader script, so we
+   style whatever lands inside #menu-container rather than a
+   markup element we control.
+   ========================================================= */
+#menu{background:var(--bg)}
+.menu-shell{
+  margin-top:2rem;
+  border:1px solid var(--border);border-radius:20px;overflow:hidden;
+  background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.04);
+  padding:.5rem
+}
+#menu-container{min-height:520px}
+#menu-container iframe,.menu-fallback-frame{
+  width:100%;border:0;display:block;border-radius:16px
+}
+/* Untappd renders its own header with a logo placeholder, an
+   unformatted phone number, and the address. The site already
+   shows all of that, so hide it. Delete this rule to show it. */
+#menu-container .menu-header-hideable{display:none}
+.menu-note{
+  margin-top:.9rem;font-size:.82rem;color:var(--muted);text-align:right
+}
+@media(max-width:768px){
+  .menu-shell{padding:.25rem;border-radius:16px}
+  #menu-container{min-height:420px}
+  .menu-note{text-align:left}
+}
+
+/* =========================================================
    EVENTS / CALENDAR
    ========================================================= */
 #events{background:var(--bg)}

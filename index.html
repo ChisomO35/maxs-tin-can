@@ -34,6 +34,7 @@
       <a href="#about">Our Story</a>
       <a href="#gallery">Gallery</a>
       <a href="#featured">The Holy Grail</a>
+      <a href="#menu">Menu</a>
       <a href="#events">Calendar</a>
       <a href="#visit">Visit</a>
       <a href="#contact">Contact Us</a>
@@ -211,6 +212,44 @@
     </div>
   </div>
 </section>
+
+<!-- ========================================================
+     MENU - live Untappd embed
+     The menu itself is edited in Untappd for Business
+     (business.untappd.com), not here. This page just shows it.
+
+     The two numbers below are the Untappd IDs:
+       47062  = account/location ID
+       172762 = menu ID
+     If Untappd ever gives you a new embed code, swap those two
+     numbers in PreloadEmbedMenu(...) and you're done.
+     ======================================================== -->
+<section id="menu">
+  <div class="container">
+    <p class="section-label" data-c="menu.label" data-clabel="Menu · small label">On Tap</p>
+    <h2 class="section-title" data-c="menu.title" data-clabel="Menu · title">What we're pouring</h2>
+    <p class="section-body" data-c="menu.body" data-clabel="Menu · intro paragraph">
+      Our live menu, straight from Untappd. It updates automatically as kegs change, so what you see here is what's behind the bar tonight.
+    </p>
+
+    <div class="menu-shell">
+      <!-- Untappd drops the menu iframe in here and keeps its height in sync -->
+      <div id="menu-container"></div>
+      <noscript>
+        <iframe
+          class="menu-fallback-frame"
+          src="https://business.untappd.com/embeds/iframes/47062/172762"
+          height="2000" width="100%" frameborder="0"
+          title="Max's Tin Can menu on Untappd"></iframe>
+      </noscript>
+    </div>
+
+    <p class="menu-note" data-c="menu.note" data-clabel="Menu · footnote">Availability changes nightly. Ask a bartender for tonight's specials.</p>
+  </div>
+</section>
+<script type="text/javascript">
+!function(e,t){var n=document.createElement("script"),a=document.getElementsByTagName("script")[0];n.async=1,a.parentNode.insertBefore(n,a),n.onload=n.onreadystatechange=function(e,a){(a||!n.readyState||/loaded|complete/.test(n.readyState))&&(n.onload=n.onreadystatechange=null,n=void 0,a||t&&t())},n.src=e}("https://embed-menu-preloader.untappdapi.com/embed-menu-preloader.min.js",(function(){PreloadEmbedMenu("menu-container",47062,172762)}));
+</script>
 
 <!-- ========================================================
      EVENTS / CALENDAR
@@ -422,6 +461,7 @@
       <a href="#about">Story</a>
       <a href="#gallery">Gallery</a>
       <a href="#featured">Holy Grail</a>
+      <a href="#menu">Menu</a>
       <a href="#events">Calendar</a>
       <a href="#visit">Visit</a>
       <a href="#contact">Contact</a>
