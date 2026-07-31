@@ -388,24 +388,49 @@ section{padding:5.5rem 1.5rem}
    gap, which is a lot of air for what is often just a drink name. */
 #menu-container .menu-item{margin-bottom:14px!important}
 
-/* Lists where no item has an ABV are food/cocktail style: a name and
-   nothing else, so they get two columns. Beer lists keep full width
-   for their brewery, rating, and description lines. If cocktails ever
-   gain ABVs or descriptions in Untappd, this reverts to one column on
-   its own rather than breaking. */
-#menu-container .menu-items-container:not(:has(.item-abv)){
-  display:grid;grid-template-columns:1fr 1fr;column-gap:28px
-}
-#menu-container .menu-items-container:not(:has(.item-abv)) .menu-item{
-  width:auto!important;margin-right:0!important;float:none!important
-}
-#menu-container .menu-items-container:not(:has(.item-abv)) img{
-  width:40px!important;height:40px!important
-}
-
 /* The beer sections have no section name, so Untappd renders an empty
    black stripe above them. */
 #menu-container .section-heading:has(.section-name:empty){display:none}
+
+/* ---------------------------------------------------------
+   Menu theming
+   The embed ships as Helvetica on a near-black/white scheme,
+   which reads as a bolted-on widget next to the rest of the
+   page. Because Untappd renders into our DOM rather than an
+   iframe, we can restyle it to the site's own type and palette.
+
+   Untappd also has its own theme editor at business.untappd.com
+   (it drives the *-bg-color / *-font-color classes on these
+   elements). Colors set there apply everywhere the menu is used,
+   including QR menus and Untappd's hosted page; the rules below
+   only apply on this site. Prefer their editor for brand colors
+   and keep this block for typography and fit.
+   --------------------------------------------------------- */
+#menu-container .ut-menu,
+#menu-container .ut-menu *{
+  font-family:'DM Sans',system-ui,sans-serif!important
+}
+#menu-container .menu-title{
+  font-family:'DM Serif Display',serif!important;
+  font-weight:400!important;letter-spacing:.01em;
+  color:var(--heading)!important
+}
+#menu-container .section-heading{background:var(--accent-light)!important}
+#menu-container .section-name{
+  color:var(--white)!important;
+  font-size:.8rem!important;letter-spacing:.06em;text-transform:uppercase
+}
+#menu-container .item-meta,
+#menu-container .item-description,
+#menu-container .date-time{color:var(--muted)!important}
+/* Only the "More Info" affordance reads as a link. Beer names are
+   anchors to Untappd and cocktail names are plain text, so without
+   this the two kinds of row would title in different colors. */
+#menu-container .link-font-color{color:var(--accent-light)!important}
+#menu-container .item-name,
+#menu-container .item-name a,
+#menu-container .item-name span{color:var(--heading)!important}
+#menu-container .divider-color{border-color:var(--border)!important}
 
 .menu-note{
   margin-top:.9rem;font-size:.82rem;color:var(--muted);text-align:right
@@ -414,10 +439,6 @@ section{padding:5.5rem 1.5rem}
   .menu-shell{padding:.25rem;border-radius:16px}
   #menu-container{min-height:420px}
   #menu-container .tab-content{max-height:440px}
-  /* Two columns are too cramped on a phone */
-  #menu-container .menu-items-container:not(:has(.item-abv)){
-    grid-template-columns:1fr
-  }
   .menu-note{text-align:left}
 }
 
