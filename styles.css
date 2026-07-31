@@ -359,12 +359,65 @@ section{padding:5.5rem 1.5rem}
    unformatted phone number, and the address. The site already
    shows all of that, so hide it. Delete this rule to show it. */
 #menu-container .menu-header-hideable{display:none}
+
+/* The list scrolls inside the card instead of stretching the page.
+   Untappd's tabs range from 4 items to 36, so without a cap the
+   section runs several thousand pixels and jumps height every time
+   you switch tabs. The tab strip sits outside .tab-content, so it
+   stays pinned while the list scrolls. Raise/remove MENU_LIST_HEIGHT
+   below if you'd rather show the whole list inline. */
+#menu-container .tab-content{
+  max-height:560px;              /* MENU_LIST_HEIGHT */
+  overflow-y:auto;overflow-x:hidden
+}
+/* Deliberately no `scrollbar-width` here: setting it makes Chrome
+   ignore the ::-webkit-scrollbar rules below and fall back to macOS
+   overlay scrollbars, which stay invisible until you already scroll.
+   Styling the pseudo-elements alone forces a permanent 10px gutter,
+   so it's obvious the list continues. */
+#menu-container .tab-content::-webkit-scrollbar{
+  width:10px;-webkit-appearance:none
+}
+#menu-container .tab-content::-webkit-scrollbar-thumb{
+  background:#c3ccd6;border-radius:999px;
+  border:3px solid var(--white)
+}
+#menu-container .tab-content::-webkit-scrollbar-track{background:transparent}
+
+/* Untappd's default row reserves 68px for an item image plus a 32px
+   gap, which is a lot of air for what is often just a drink name. */
+#menu-container .menu-item{margin-bottom:14px!important}
+
+/* Lists where no item has an ABV are food/cocktail style: a name and
+   nothing else, so they get two columns. Beer lists keep full width
+   for their brewery, rating, and description lines. If cocktails ever
+   gain ABVs or descriptions in Untappd, this reverts to one column on
+   its own rather than breaking. */
+#menu-container .menu-items-container:not(:has(.item-abv)){
+  display:grid;grid-template-columns:1fr 1fr;column-gap:28px
+}
+#menu-container .menu-items-container:not(:has(.item-abv)) .menu-item{
+  width:auto!important;margin-right:0!important;float:none!important
+}
+#menu-container .menu-items-container:not(:has(.item-abv)) img{
+  width:40px!important;height:40px!important
+}
+
+/* The beer sections have no section name, so Untappd renders an empty
+   black stripe above them. */
+#menu-container .section-heading:has(.section-name:empty){display:none}
+
 .menu-note{
   margin-top:.9rem;font-size:.82rem;color:var(--muted);text-align:right
 }
 @media(max-width:768px){
   .menu-shell{padding:.25rem;border-radius:16px}
   #menu-container{min-height:420px}
+  #menu-container .tab-content{max-height:440px}
+  /* Two columns are too cramped on a phone */
+  #menu-container .menu-items-container:not(:has(.item-abv)){
+    grid-template-columns:1fr
+  }
   .menu-note{text-align:left}
 }
 
