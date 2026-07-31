@@ -70,7 +70,8 @@ a{color:var(--accent-dark)}
 .field .rt strong{font-weight:700}
 
 /* Photos */
-.photo-card{display:flex;gap:1rem;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.photo-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:1rem}
+.photo-top{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
 .photo-thumb{width:90px;height:90px;border-radius:10px;object-fit:cover;background:var(--bg);border:1px solid var(--border);flex-shrink:0}
 .photo-thumb.contain{object-fit:contain}
 .photo-meta{flex:1;min-width:160px}
@@ -78,6 +79,30 @@ a{color:var(--accent-dark)}
 .photo-meta .status{font-size:.8rem;color:var(--muted);margin-top:.2rem}
 .photo-actions label{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:.55rem .9rem;font-size:.86rem;font-weight:600}
 .photo-actions input[type=file]{display:none}
+
+/* Photo framing (crop) editor */
+.crop{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-start}
+.crop-frame{
+  flex:0 0 300px;max-width:100%;border-radius:10px;overflow:hidden;
+  border:1px solid var(--border);background:var(--bg);
+  position:relative;cursor:grab;touch-action:none;user-select:none;
+}
+.crop-frame.dragging{cursor:grabbing}
+.crop-frame img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.crop-frame::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(to right,transparent 33.33%,rgba(255,255,255,.35) 33.33%,rgba(255,255,255,.35) calc(33.33% + 1px),transparent calc(33.33% + 1px),transparent 66.66%,rgba(255,255,255,.35) 66.66%,rgba(255,255,255,.35) calc(66.66% + 1px),transparent calc(66.66% + 1px)),
+    linear-gradient(to bottom,transparent 33.33%,rgba(255,255,255,.35) 33.33%,rgba(255,255,255,.35) calc(33.33% + 1px),transparent calc(33.33% + 1px),transparent 66.66%,rgba(255,255,255,.35) 66.66%,rgba(255,255,255,.35) calc(66.66% + 1px),transparent calc(66.66% + 1px));
+  opacity:0;transition:opacity .15s;
+}
+.crop-frame:hover::after,.crop-frame.dragging::after{opacity:1}
+.crop-side{flex:1;min-width:200px}
+.crop-hint{font-size:.82rem;color:var(--muted);margin-bottom:.7rem}
+.crop-zoom{display:flex;align-items:center;gap:.6rem;font-size:.82rem;font-weight:600;color:var(--muted)}
+.crop-zoom input[type=range]{flex:1;accent-color:var(--accent-dark);min-width:120px}
+.crop-reset{margin-top:.8rem;padding:.45rem .8rem;font-size:.82rem;border-radius:8px}
+.crop-note{margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--border);font-size:.82rem;color:var(--muted)}
 
 /* Events */
 .event-row{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:.9rem}
@@ -108,9 +133,11 @@ a{color:var(--accent-dark)}
   .tabs{padding:.3rem;gap:.25rem}
   .tab{font-size:.8rem;padding:.65rem .25rem}
   .group{padding:.9rem .85rem .2rem}
-  .photo-card{gap:.7rem;padding:.85rem}
+  .photo-card{padding:.85rem}
+  .photo-top{gap:.7rem}
   .photo-thumb{width:64px;height:64px}
   .photo-actions{width:100%}
+  .crop-frame{flex:1 1 100%}
   .event-row .er-date,.event-row .er-title{flex:1 1 100%}
   .savebar{padding:.7rem .8rem}
   .savebar-inner{gap:.6rem}
@@ -170,7 +197,7 @@ a{color:var(--accent-dark)}
 
   <!-- PHOTOS -->
   <section class="panel" id="panel-photos">
-    <p class="intro">Replace any photo on the site. Choose a new image and it uploads automatically — then hit Save to make it live.</p>
+    <p class="intro">Replace any photo on the site. Choose a new image and it uploads automatically. Photos that get cropped to fit their spot also have a framing box — drag the photo inside it to pick what shows, and zoom in to crop tighter. Hit Save to make it live.</p>
     <div id="photoFields"><div class="loading">Loading…</div></div>
   </section>
 </div>

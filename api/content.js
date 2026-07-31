@@ -13,6 +13,6 @@ export default async function handler(req, res) {
     return res.status(200).json(withDefaults(content));
   } catch (err) {
     // Never break the public site — return empty content on error.
-    return res.status(200).json({ texts: {}, images: {}, events: [] });
+    return res.status(200).json({ texts: {}, images: {}, crops: {}, events: [] });
   }
 }

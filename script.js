@@ -72,6 +72,23 @@ function applyLiveContent(content) {
       if (content.images[key]) el.src = content.images[key];
     });
   }
+  // Framing overrides → which part of a cropped photo stays visible.
+  // { x, y } is the focal point in percent, zoom scales the photo up.
+  if (content.crops) {
+    document.querySelectorAll('[data-cimg]').forEach(el => {
+      const c = content.crops[el.getAttribute('data-cimg')];
+      if (!c) return;
+      const pos = (c.x != null ? c.x : 50) + '% ' + (c.y != null ? c.y : 50) + '%';
+      // Gallery photos animate transform on hover; suppress that transition
+      // for this one frame so the saved framing appears instantly, not as a
+      // zoom animation when the page loads.
+      el.style.transition = 'none';
+      el.style.objectPosition = pos;
+      el.style.setProperty('--crop-origin', pos);
+      el.style.setProperty('--crop-zoom', String(c.zoom || 1));
+      requestAnimationFrame(() => { el.style.transition = ''; });
+    });
+  }
   // Events → replace the calendar source if provided
   if (Array.isArray(content.events)) EVENTS = content.events;
 }

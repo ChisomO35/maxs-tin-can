@@ -16,7 +16,10 @@ export const DEFAULT_EVENTS = [
   { id: 'def-4', date: '2026-07-28', title: 'Trivia Tuesday', desc: 'Weekly bar trivia. Teams of up to 6. Come early for a good spot!' },
 ];
 
-const EMPTY = { texts: {}, images: {}, events: null };
+// crops: per-image framing, keyed the same way as images —
+// { "gallery.photo1": { x: 50, y: 30, zoom: 1.2 } } where x/y are the
+// focal point in percent and zoom is a 1–3 scale factor.
+const EMPTY = { texts: {}, images: {}, crops: {}, events: null };
 
 // Read the saved content blob. Returns the stored object, or an
 // empty shell if nothing has been saved yet.
@@ -31,6 +34,7 @@ export async function readContent() {
     return {
       texts: data.texts || {},
       images: data.images || {},
+      crops: sanitizeCrops(data.crops),
       events: Array.isArray(data.events) ? data.events : null,
     };
   } catch (err) {
@@ -38,11 +42,34 @@ export async function readContent() {
   }
 }
 
+// Keep only well-formed { x, y, zoom } entries, clamped to sane ranges,
+// so a bad value can never break the layout of the live site.
+export function sanitizeCrops(crops) {
+  const out = {};
+  if (!crops || typeof crops !== 'object') return out;
+  const num = (v, min, max, fallback) => {
+    const n = Number(v);
+    if (!isFinite(n)) return fallback;
+    return Math.min(max, Math.max(min, Math.round(n * 100) / 100));
+  };
+  Object.keys(crops).forEach((key) => {
+    const c = crops[key];
+    if (!c || typeof c !== 'object') return;
+    const x = num(c.x, 0, 100, 50);
+    const y = num(c.y, 0, 100, 50);
+    const zoom = num(c.zoom, 1, 3, 1);
+    if (x === 50 && y === 50 && zoom === 1) return; // default framing — nothing to store
+    out[key] = { x, y, zoom };
+  });
+  return out;
+}
+
 // Persist the full content object.
 export async function writeContent(content) {
   const body = JSON.stringify({
     texts: content.texts || {},
     images: content.images || {},
+    crops: sanitizeCrops(content.crops),
     events: Array.isArray(content.events) ? content.events : null,
   });
   await put(CONTENT_PATH, body, {
@@ -60,6 +87,7 @@ export function withDefaults(content) {
   return {
     texts: content.texts || {},
     images: content.images || {},
+    crops: content.crops || {},
     events: Array.isArray(content.events) ? content.events : DEFAULT_EVENTS,
   };
 }

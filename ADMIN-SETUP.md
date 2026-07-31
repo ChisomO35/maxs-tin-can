@@ -35,6 +35,11 @@ files and settings take effect.
 - **Events** tab — add/edit/remove what shows on the calendar (the most-used part).
 - **Text** tab — change any wording on the site.
 - **Photos** tab — upload a new image to replace any photo (auto-resized).
+  Photos that the site crops to fit their slot (the two Our Story photos and the
+  four gallery photos) also get a **framing box** underneath, shaped exactly like
+  the spot on the site. Drag the photo inside the box to choose which part stays
+  visible, use **Zoom** to crop in tighter, or **Reset framing** to go back to
+  centred and uncropped.
 - Hit **Save changes**. Refresh the main site to see them live.
 
 ## Notes
@@ -44,3 +49,8 @@ files and settings take effect.
 - If you ever change a text box back to exactly the original wording, that field
   goes back to the site default automatically.
 - Run `npm install` locally before `vercel dev` if testing on your machine.
+- For developers: a photo gets a framing box when its `<img>` in `index.html`
+  carries `data-cratio="W/H"` — the shape of the slot it fills. Add that
+  attribute to any new photo the CSS crops with `object-fit:cover` (and give the
+  image's CSS rule `transform:scale(var(--crop-zoom,1))` /
+  `transform-origin:var(--crop-origin,50% 50%)` so zoom applies).

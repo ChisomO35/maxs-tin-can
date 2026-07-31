@@ -23,6 +23,7 @@ export default async function handler(req, res) {
     await writeContent({
       texts: incoming.texts || {},
       images: incoming.images || {},
+      crops: incoming.crops || {},
       events: Array.isArray(incoming.events) ? incoming.events : null,
     });
     return res.status(200).json({ ok: true });

@@ -9,10 +9,13 @@
 
   const PW_KEY = 'mtc_admin_pw';
   let pw = sessionStorage.getItem(PW_KEY) || '';
-  let content = { texts: {}, images: {}, events: [] }; // saved overrides + events
+  let content = { texts: {}, images: {}, crops: {}, events: [] }; // saved overrides + events
   let textFields = [];   // [{key,label,section,def}]
-  let imageFields = [];   // [{key,label,section,def}]
+  let imageFields = [];   // [{key,label,section,def,ratio}]
   let pendingImages = {}; // key -> newly uploaded url (this session)
+  let cropState = {};     // key -> {x,y,zoom} framing being edited
+
+  const DEFAULT_CROP = { x: 50, y: 50, zoom: 1 };
 
   const SECTION_NAMES = {
     hero: 'Hero / Top of page',
@@ -100,9 +103,12 @@
       content = {
         texts: (contentRes && contentRes.texts) || {},
         images: (contentRes && contentRes.images) || {},
+        crops: (contentRes && contentRes.crops) || {},
         events: (contentRes && Array.isArray(contentRes.events)) ? contentRes.events.slice() : [],
       };
       pendingImages = {};
+      cropState = {};
+      Object.keys(content.crops).forEach((k) => { cropState[k] = normCrop(content.crops[k]); });
 
       discoverFields(htmlRes);
       renderText();
@@ -137,6 +143,9 @@
         label: node.getAttribute('data-clabel') || (key === 'logo' ? 'Logo (header & footer)' : key),
         section: key.split('.')[0],
         def: node.getAttribute('src'),
+        // data-cratio marks a photo the site crops to fit (object-fit:cover)
+        // and gives the shape of the slot, so the framing box matches the site.
+        ratio: node.getAttribute('data-cratio') || '',
       });
     });
   }
@@ -181,12 +190,52 @@
       const current = pendingImages[f.key] || content.images[f.key] || f.def;
       const card = el('div', { className: 'photo-card' });
       card.innerHTML =
-        '<img class="photo-thumb' + (f.key === 'logo' ? ' contain' : '') + '" src="' + esc(current) + '" alt="">' +
-        '<div class="photo-meta"><b>' + esc(f.label) + '</b><div class="status" data-status></div></div>' +
-        '<div class="photo-actions"><label>Choose photo<input type="file" accept="image/*"></label></div>';
+        '<div class="photo-top">' +
+          '<img class="photo-thumb' + (f.key === 'logo' ? ' contain' : '') + '" src="' + esc(current) + '" alt="">' +
+          '<div class="photo-meta"><b>' + esc(f.label) + '</b><div class="status" data-status></div></div>' +
+          '<div class="photo-actions"><label>Choose photo<input type="file" accept="image/*"></label></div>' +
+        '</div>' +
+        (f.ratio
+          ? '<div class="crop">' +
+              '<div class="crop-frame" style="aspect-ratio:' + esc(f.ratio) + '"><img src="' + esc(current) + '" alt=""></div>' +
+              '<div class="crop-side">' +
+                '<p class="crop-hint">This photo is cropped to fit its spot on the site. Drag it in the box to choose what shows, and zoom in to crop tighter. The box is the exact shape visitors see.</p>' +
+                '<label class="crop-zoom">Zoom<input type="range" min="1" max="3" step="0.01"></label>' +
+                '<button class="btn btn-ghost crop-reset" type="button">Reset framing</button>' +
+              '</div>' +
+            '</div>'
+          : '<p class="crop-note">Shown in full on the site — nothing gets cropped, so there is no framing to adjust.</p>');
+
       const input = card.querySelector('input[type=file]');
       const thumb = card.querySelector('.photo-thumb');
       const status = card.querySelector('[data-status]');
+      const frame = card.querySelector('.crop-frame');
+      const preview = frame && frame.querySelector('img');
+      const zoomInput = card.querySelector('.crop-zoom input');
+
+      function paint() {
+        if (!preview) return;
+        const c = getCrop(f.key);
+        const pos = c.x + '% ' + c.y + '%';
+        preview.style.objectPosition = pos;
+        preview.style.transformOrigin = pos;
+        preview.style.transform = 'scale(' + c.zoom + ')';
+        if (zoomInput && Number(zoomInput.value) !== c.zoom) zoomInput.value = String(c.zoom);
+      }
+
+      if (frame) {
+        paint();
+        enableFrameDrag(frame, f.key, paint);
+        zoomInput.addEventListener('input', () => {
+          setCrop(f.key, { zoom: clamp(Number(zoomInput.value) || 1, 1, 3) });
+          paint();
+        });
+        card.querySelector('.crop-reset').addEventListener('click', () => {
+          setCrop(f.key, DEFAULT_CROP);
+          paint();
+        });
+      }
+
       input.addEventListener('change', async () => {
         const file = input.files && input.files[0];
         if (!file) return;
@@ -204,7 +253,15 @@
           if (r.ok && r.data && r.data.url) {
             pendingImages[f.key] = r.data.url;
             thumb.src = r.data.url;
-            status.textContent = 'New photo ready — hit Save to publish.';
+            if (preview) {
+              preview.src = r.data.url;
+              // A new photo frames differently — start from centred, uncropped.
+              cropState[f.key] = { ...DEFAULT_CROP };
+              paint();
+            }
+            status.textContent = frame
+              ? 'New photo ready — set the framing below, then hit Save.'
+              : 'New photo ready — hit Save to publish.';
             setMsg($('#saveMsg'), 'Unsaved changes', '');
           } else {
             status.textContent = (r.data && r.data.error) || 'Upload failed.';
@@ -215,6 +272,65 @@
       });
       wrap.appendChild(card);
     });
+  }
+
+  // ---------- framing (crop) helpers ----------
+  function clamp(n, min, max) { return Math.min(max, Math.max(min, n)); }
+
+  function normCrop(c) {
+    if (!c || typeof c !== 'object') return { ...DEFAULT_CROP };
+    const num = (v, min, max, d) => {
+      const n = Number(v);
+      return isFinite(n) ? clamp(Math.round(n * 100) / 100, min, max) : d;
+    };
+    return { x: num(c.x, 0, 100, 50), y: num(c.y, 0, 100, 50), zoom: num(c.zoom, 1, 3, 1) };
+  }
+
+  function getCrop(key) {
+    if (!cropState[key]) cropState[key] = { ...DEFAULT_CROP };
+    return cropState[key];
+  }
+
+  function setCrop(key, patch) {
+    cropState[key] = normCrop({ ...getCrop(key), ...patch });
+    setMsg($('#saveMsg'), 'Unsaved changes', '');
+  }
+
+  // Drag inside the framing box to pan the photo. Dragging right reveals
+  // more of the photo's left side, so the focal point moves the other way.
+  function enableFrameDrag(frame, key, paint) {
+    let dragging = false, lastX = 0, lastY = 0, pointerId = null;
+
+    frame.addEventListener('pointerdown', (e) => {
+      dragging = true; pointerId = e.pointerId;
+      lastX = e.clientX; lastY = e.clientY;
+      frame.classList.add('dragging');
+      frame.setPointerCapture(pointerId);
+      e.preventDefault();
+    });
+
+    frame.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const rect = frame.getBoundingClientRect();
+      const c = getCrop(key);
+      const dx = e.clientX - lastX, dy = e.clientY - lastY;
+      lastX = e.clientX; lastY = e.clientY;
+      setCrop(key, {
+        x: c.x - (dx / rect.width) * 100 / c.zoom,
+        y: c.y - (dy / rect.height) * 100 / c.zoom,
+      });
+      paint();
+    });
+
+    const end = () => {
+      if (!dragging) return;
+      dragging = false;
+      frame.classList.remove('dragging');
+      if (pointerId !== null && frame.hasPointerCapture(pointerId)) frame.releasePointerCapture(pointerId);
+      pointerId = null;
+    };
+    frame.addEventListener('pointerup', end);
+    frame.addEventListener('pointercancel', end);
   }
 
   // Downscale + compress in the browser before upload.
@@ -360,6 +476,19 @@
     return out;
   }
 
+  // Only store framing that differs from the site's default (centred, no zoom).
+  function collectCrops() {
+    const out = {};
+    imageFields.forEach((f) => {
+      if (!f.ratio) return;
+      const c = cropState[f.key];
+      if (!c) return;
+      if (c.x === 50 && c.y === 50 && c.zoom === 1) return;
+      out[f.key] = c;
+    });
+    return out;
+  }
+
   function collectEvents() {
     const out = [];
     document.querySelectorAll('#eventList .event-row').forEach((row) => {
@@ -376,12 +505,12 @@
     const btn = $('#saveBtn');
     btn.disabled = true; btn.textContent = 'Saving…';
     setMsg($('#saveMsg'), '', '');
-    const payload = { texts: collectText(), images: collectImages(), events: collectEvents() };
+    const payload = { texts: collectText(), images: collectImages(), crops: collectCrops(), events: collectEvents() };
     const r = await api('/api/save', { method: 'POST', body: JSON.stringify({ content: payload }) });
     btn.disabled = false; btn.textContent = 'Save changes';
     if (r.ok) {
       // Reflect saved state locally so future diffs are correct.
-      content = { texts: payload.texts, images: payload.images, events: payload.events };
+      content = { texts: payload.texts, images: payload.images, crops: payload.crops, events: payload.events };
       pendingImages = {};
       setMsg($('#saveMsg'), 'Saved! Changes are now live on the site.', 'good');
     } else if (r.status === 401) {
