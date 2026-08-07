@@ -181,9 +181,10 @@ function initBuiltinCalendar() {
 if (window.instgrm) window.instgrm.Embeds.process();
 
 // ─────────────────────────────────────────────────────────
-// CONTACT FORM - Formspree integration
-// Replace YOUR_FORM_ID in the form action with your Formspree ID
-// Sign up free at https://formspree.io
+// CONTACT FORM - posts to Web3Forms, which emails each submission to
+// tincanchapelhill@gmail.com. The access key lives in a hidden input
+// in index.html; it is public by design and only permits sending to
+// that one inbox.
 // ─────────────────────────────────────────────────────────
 const contactForm = document.getElementById('contactForm');
 contactForm?.addEventListener('submit', async function(e) {
@@ -194,21 +195,30 @@ contactForm?.addEventListener('submit', async function(e) {
   btn.textContent = 'Sending...';
 
   try {
+    const payload = Object.fromEntries(new FormData(contactForm));
+    // Give the inbox a scannable subject line instead of the generic
+    // default, and make Reply in Gmail go back to the visitor.
+    payload.subject = `Contact Form Submission - ${payload.subject || 'No subject'} - ${payload.name}`;
+    payload.from_name = "Max's Tin Can website";
+    payload.replyto = payload.email;
+
     const resp = await fetch(contactForm.action, {
       method: 'POST',
-      body: new FormData(contactForm),
-      headers: { 'Accept': 'application/json' }
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
     });
-    if (resp.ok) {
-      fb.textContent = 'Thanks for reaching out! We\u2019ll get back to you soon.';
-      fb.style.color = 'var(--accent)';
-      fb.style.display = 'block';
-      contactForm.reset();
-    } else {
-      throw new Error('Form submission failed');
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok || !data.success) {
+      // Log the real reason for debugging, show the visitor something calmer.
+      console.error('Contact form failed:', resp.status, data.message || '(no detail)');
+      throw new Error('Something went wrong. Please try again or email us directly.');
     }
+    fb.textContent = 'Thanks for reaching out! We\u2019ll get back to you soon.';
+    fb.style.color = 'var(--accent)';
+    fb.style.display = 'block';
+    contactForm.reset();
   } catch (err) {
-    fb.textContent = 'Something went wrong. Please try again or email us directly.';
+    fb.textContent = err.message || 'Something went wrong. Please try again or email us directly.';
     fb.style.color = '#ff6b6b';
     fb.style.display = 'block';
   }
